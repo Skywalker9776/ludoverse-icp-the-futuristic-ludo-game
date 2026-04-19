@@ -1,0 +1,344 @@
+// Version: 3.0.0
+type BotConfig__622387572 =
+  {
+    balance : Float;
+    difficulty : BotDifficulty__232937980;
+    isPremium : Bool;
+    name : Text;
+    principal : Principal
+  };
+type BotDifficulty__232937980 = {#easy; #hard; #medium};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type DiceRoll__1698155 =
+  {
+    diceResult : Nat;
+    entropy : Text;
+    playerPrincipal : Principal;
+    rollNumber : Nat;
+    seed : Text;
+    seedHash : Text;
+    timestamp : Int
+  };
+type GameMode__586516805 =
+  {
+    #advanced;
+    #bonus;
+    #challenge;
+    #classic;
+    #copyClassic;
+    #copyFast;
+    #custom;
+    #demo;
+    #experimental;
+    #magic;
+    #master;
+    #practice;
+    #quick;
+    #superLudo;
+    #team;
+    #timed;
+    #tournament;
+    #twoVsTwo
+  };
+type GameSession__844063274 =
+  {
+    betAmount : Float;
+    createdAt : Int;
+    currentTurn : Nat;
+    diceHistory : [DiceRoll__1698155];
+    id : Principal;
+    isDemo : Bool;
+    mode : GameMode__586516805;
+    playerStates : [PlayerState__809798667];
+    players : [Principal];
+    rankedStatus : RankedStatus__860500098;
+    status : GameStatus__99473276;
+    winner : ?Principal
+  };
+type GameStatus__99473276 = {#active; #completed; #waiting};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type MatchmakingRoom__627930788 =
+  {
+    betAmount : Float;
+    createdAt : Int;
+    creator : Principal;
+    gameMode : GameMode__586516805;
+    id : Principal;
+    isDemo : Bool;
+    maxPlayers : Nat;
+    playerCount : Nat;
+    players : [Principal];
+    roomType : RoomType__641198370;
+    status : {#active; #completed; #waiting}
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type OldAccessControlState__841599830 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__605269027<Principal, OldUserRole__889293160>
+  };
+type OldBotConfig__256826298 =
+  {
+    balance : Float;
+    difficulty : OldBotDifficulty__861677262;
+    isPremium : Bool;
+    principal : Principal
+  };
+type OldBotDifficulty__861677262 = {#easy; #hard; #medium};
+type OldDiceRoll__229570806 =
+  {
+    diceResult : Nat;
+    playerPrincipal : Principal;
+    rollNumber : Nat;
+    seed : Text;
+    timestamp : Int
+  };
+type OldGameMode__794542461 =
+  {
+    #advanced;
+    #bonus;
+    #challenge;
+    #classic;
+    #copyClassic;
+    #copyFast;
+    #custom;
+    #demo;
+    #experimental;
+    #master;
+    #practice;
+    #quick;
+    #superLudo;
+    #team;
+    #timed;
+    #tournament;
+    #twoVsTwo
+  };
+type OldGameSession__427915290 =
+  {
+    betAmount : Float;
+    createdAt : Int;
+    diceHistory : [OldDiceRoll__229570806];
+    id : Principal;
+    isDemo : Bool;
+    mode : OldGameMode__794542461;
+    players : [Principal];
+    rankedStatus : OldRankedStatus__978222324;
+    status : OldGameStatus__771166039;
+    winner : ?Principal
+  };
+type OldGameStatus__771166039 = {#active; #completed; #waiting};
+type OldMatchmakingRoom__970879074 =
+  {
+    creator : Principal;
+    gameMode : OldGameMode__794542461;
+    id : Principal;
+    isDemo : Bool;
+    maxPlayers : Nat;
+    playerCount : Nat;
+    players : [Principal];
+    roomType : OldRoomType__11698130;
+    status : {#active; #completed; #waiting}
+  };
+type OldPlayer__400134019 =
+  {
+    color : Text;
+    createdAt : Int;
+    currentGame : ?Principal;
+    draws : Float;
+    gamesPlayed : Float;
+    icpBalance : Float;
+    isPremium : Bool;
+    lastActive : Int;
+    losses : Float;
+    name : Text;
+    principal : Principal;
+    wins : Float
+  };
+type OldRankedStatus__978222324 = {#ranked; #unranked};
+type OldRoomType__11698130 = {#isPublic; #privateRoom};
+type OldUserProfile__416069324 =
+  {
+    color : Text;
+    createdAt : Int;
+    currentGame : ?Principal;
+    draws : Float;
+    gamesPlayed : Float;
+    icpBalance : Float;
+    isPremium : Bool;
+    lastActive : Int;
+    losses : Float;
+    name : Text;
+    wins : Float
+  };
+type OldUserRole__889293160 = {#admin; #guest; #user};
+type OldWallet__481353512 =
+  {balance : Float; createdAt : Int; id : Principal; lastActive : Int};
+type PlayerState__809798667 =
+  {
+    consecutiveWins : Nat;
+    lastBetAmount : Float;
+    principal : Principal;
+    tokens : [TokenPosition__585656743]
+  };
+type RankedStatus__860500098 = {#ranked; #unranked};
+type RoomType__641198370 = {#isPublic; #privateRoom};
+type SpectatorReaction__913371110 =
+  {emoji : Text; reactorPrincipal : Principal; timestamp : Int};
+type TokenPosition__585656743 =
+  {
+    isFinished : Bool;
+    isHome : Bool;
+    isSafe : Bool;
+    position : Int;
+    tokenIndex : Nat
+  };
+type TokenSoul__917764012 =
+  {
+    captureCount : Nat;
+    capturedCount : Nat;
+    level : Nat;
+    nearMissCount : Nat;
+    tokenIndex : Nat;
+    xp : Nat
+  };
+type Transaction__865268250 =
+  {
+    amount : Float;
+    description : Text;
+    id : Nat;
+    timestamp : Int;
+    txType : {#betLock; #betRefund; #betWin; #deposit; #withdraw}
+  };
+type UserProfile__491224006 =
+  {
+    avatarUrl : Text;
+    bio : Text;
+    color : Text;
+    createdAt : Int;
+    currentGame : ?Principal;
+    demoCredits : Float;
+    draws : Float;
+    gamesPlayed : Float;
+    icpBalance : Float;
+    isPremium : Bool;
+    lastActive : Int;
+    losses : Float;
+    name : Text;
+    referralCode : Text;
+    wins : Float
+  };
+type Wallet__442667382 =
+  {
+    balance : Float;
+    createdAt : Int;
+    demoCredits : Float;
+    id : Principal;
+    lastActive : Int
+  };
+actor ({
+  in accessControlState : OldAccessControlState__841599830;
+  in bots : Map__605269027<Principal, OldBotConfig__256826298>;
+  stable ceoPrincipal : Principal;
+  in games : Map__605269027<Principal, OldGameSession__427915290>;
+  in matchmakingRooms :
+    Map__605269027<Principal, OldMatchmakingRoom__970879074>;
+  stable var nextTransactionId : Nat;
+  in players : Map__605269027<Principal, OldPlayer__400134019>;
+  stable spectatorReactions :
+    {
+      var root :
+        Node__46230540<Principal,
+                        List__415060402<SpectatorReaction__913371110>>;
+      var size : Nat__490723111
+    };
+  stable spectators :
+    {
+      var root : Node__46230540<Principal, List__415060402<Principal>>;
+      var size : Nat__490723111
+    };
+  stable tokenSouls :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<TokenSoul__917764012>>;
+      var size : Nat__490723111
+    };
+  stable var totalBetsVolume : Float;
+  stable transactions :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<Transaction__865268250>>;
+      var size : Nat__490723111
+    };
+  in userProfiles : Map__605269027<Principal, OldUserProfile__416069324>;
+  in wallets : Map__605269027<Principal, OldWallet__481353512>
+}, {
+  stable bots :
+    {
+      var root : Node__46230540<Principal, BotConfig__622387572>;
+      var size : Nat__490723111
+    };
+  stable ceoPrincipal : Principal;
+  stable games :
+    {
+      var root : Node__46230540<Principal, GameSession__844063274>;
+      var size : Nat__490723111
+    };
+  stable matchmakingRooms :
+    {
+      var root : Node__46230540<Principal, MatchmakingRoom__627930788>;
+      var size : Nat__490723111
+    };
+  stable var nextTransactionId : Nat;
+  stable spectatorReactions :
+    {
+      var root :
+        Node__46230540<Principal,
+                        List__415060402<SpectatorReaction__913371110>>;
+      var size : Nat__490723111
+    };
+  stable spectators :
+    {
+      var root : Node__46230540<Principal, List__415060402<Principal>>;
+      var size : Nat__490723111
+    };
+  stable tokenSouls :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<TokenSoul__917764012>>;
+      var size : Nat__490723111
+    };
+  stable var totalBetsVolume : Float;
+  stable transactions :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<Transaction__865268250>>;
+      var size : Nat__490723111
+    };
+  stable userProfiles :
+    {
+      var root : Node__46230540<Principal, UserProfile__491224006>;
+      var size : Nat__490723111
+    };
+  stable wallets :
+    {
+      var root : Node__46230540<Principal, Wallet__442667382>;
+      var size : Nat__490723111
+    }
+}) ;

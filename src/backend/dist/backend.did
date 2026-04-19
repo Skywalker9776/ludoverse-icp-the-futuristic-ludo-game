@@ -1,0 +1,264 @@
+type Wallet = 
+ record {
+   balance: float64;
+   createdAt: int;
+   demoCredits: float64;
+   id: principal;
+   lastActive: int;
+ };
+type UserProfile = 
+ record {
+   avatarUrl: text;
+   bio: text;
+   color: text;
+   createdAt: int;
+   currentGame: opt principal;
+   demoCredits: float64;
+   draws: float64;
+   gamesPlayed: float64;
+   icpBalance: float64;
+   isPremium: bool;
+   lastActive: int;
+   losses: float64;
+   name: text;
+   referralCode: text;
+   wins: float64;
+ };
+type Transaction = 
+ record {
+   amount: float64;
+   description: text;
+   id: nat;
+   timestamp: int;
+   txType: variant {
+             betLock;
+             betRefund;
+             betWin;
+             deposit;
+             withdraw;
+           };
+ };
+type TokenSoul = 
+ record {
+   captureCount: nat;
+   capturedCount: nat;
+   level: nat;
+   nearMissCount: nat;
+   tokenIndex: nat;
+   xp: nat;
+ };
+type TokenPosition = 
+ record {
+   isFinished: bool;
+   isHome: bool;
+   isSafe: bool;
+   position: int;
+   tokenIndex: nat;
+ };
+type SystemStats = 
+ record {
+   activeGames: nat;
+   totalBetsVolume: float64;
+   totalGames: nat;
+   totalPlayers: nat;
+   totalSpectators: nat;
+ };
+type SpectatorReaction = 
+ record {
+   emoji: text;
+   reactorPrincipal: principal;
+   timestamp: int;
+ };
+type RoomType = 
+ variant {
+   isPublic;
+   privateRoom;
+ };
+type RankedStatus = 
+ variant {
+   ranked;
+   unranked;
+ };
+type PlayerState = 
+ record {
+   consecutiveWins: nat;
+   lastBetAmount: float64;
+   "principal": principal;
+   tokens: vec TokenPosition;
+ };
+type OfficialWallet = 
+ record {
+   address: text;
+   walletLabel: text;
+ };
+type MoveProbability = 
+ record {
+   captureChance: float64;
+   position: int;
+   probability: float64;
+   safeScore: float64;
+ };
+type MatchmakingRoom = 
+ record {
+   betAmount: float64;
+   createdAt: int;
+   creator: principal;
+   gameMode: GameMode;
+   id: principal;
+   isDemo: bool;
+   maxPlayers: nat;
+   playerCount: nat;
+   players: vec principal;
+   roomType: RoomType;
+   status: variant {
+             active;
+             completed;
+             waiting;
+           };
+ };
+type GameStatus = 
+ variant {
+   active;
+   completed;
+   waiting;
+ };
+type GameSession = 
+ record {
+   betAmount: float64;
+   createdAt: int;
+   currentTurn: nat;
+   diceHistory: vec DiceRoll;
+   id: principal;
+   isDemo: bool;
+   mode: GameMode;
+   playerStates: vec PlayerState;
+   players: vec principal;
+   rankedStatus: RankedStatus;
+   status: GameStatus;
+   winner: opt principal;
+ };
+type GameMode = 
+ variant {
+   advanced;
+   bonus;
+   challenge;
+   classic;
+   copyClassic;
+   copyFast;
+   custom;
+   demo;
+   experimental;
+   magic;
+   master;
+   practice;
+   quick;
+   superLudo;
+   team;
+   timed;
+   tournament;
+   twoVsTwo;
+ };
+type FeaturedGame = 
+ record {
+   betAmount: float64;
+   gameId: principal;
+   mode: GameMode;
+   playerCount: nat;
+   spectatorCount: nat;
+   status: GameStatus;
+ };
+type DiceRoll = 
+ record {
+   diceResult: nat;
+   entropy: text;
+   playerPrincipal: principal;
+   rollNumber: nat;
+   seed: text;
+   seedHash: text;
+   timestamp: int;
+ };
+type BotDifficulty = 
+ variant {
+   easy;
+   hard;
+   medium;
+ };
+type BotConfig = 
+ record {
+   balance: float64;
+   difficulty: BotDifficulty;
+   isPremium: bool;
+   name: text;
+   "principal": principal;
+ };
+type BoardState = 
+ record {
+   betMultiplier: float64;
+   glowIntensity: float64;
+   state: text;
+   winStreakPlayer: opt principal;
+ };
+service : {
+  addTokenXP: (tokenIndex: nat, xp: nat) -> ();
+  automaticUserInitialization: () ->
+   (record {
+      loginSuccess: bool;
+      message: text;
+      playerExists: bool;
+      wallet: Wallet;
+    });
+  createGame: (mode: GameMode, betAmount: float64, isDemo: bool) ->
+   (principal);
+  createMatchmakingRoom: (roomType: RoomType, gameMode: GameMode, betAmount:
+   float64, maxPlayers: nat, isDemo: bool) -> (principal);
+  createUser: (name: text, color: text) -> ();
+  deposit: (amount: float64) -> (bool);
+  forfeitGame: (gameId: principal) -> (bool);
+  generateReferralLink: () -> (text) query;
+  getAllPlayers: () -> (vec UserProfile) query;
+  getAvailableBots: () -> (vec BotConfig) query;
+  getAvailableGames: () -> (vec GameSession) query;
+  getAvailableRooms: () -> (vec MatchmakingRoom) query;
+  getBalance: () -> (float64) query;
+  getBoardState: (gameId: principal) -> (BoardState) query;
+  getBotMove: (gameId: principal, botPrincipal: principal) -> (nat) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getDemoCredits: () -> (float64) query;
+  getFeaturedGames: () -> (vec FeaturedGame) query;
+  getGame: (gameId: principal) -> (opt GameSession) query;
+  getMoveProbabilities: (gameId: principal) -> (vec MoveProbability) query;
+  getOfficialWallets: () -> (vec OfficialWallet) query;
+  getRoomState: (roomId: principal) -> (opt MatchmakingRoom) query;
+  getSpectatorCount: (gameId: principal) -> (nat) query;
+  getSpectatorReactions: (gameId: principal) -> (vec SpectatorReaction) query;
+  getSystemStats: () -> (SystemStats) query;
+  getTokenSouls: (player: principal) -> (vec TokenSoul) query;
+  getTransactionHistory: () -> (vec Transaction) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  getWallet: () -> (opt Wallet) query;
+  getWinner: (gameId: principal) -> (opt principal) query;
+  isFirstTime: () -> (bool) query;
+  isPremium: () -> (bool) query;
+  joinAsSpectator: (gameId: principal) -> (bool);
+  joinGame: (gameId: principal, isDemo: bool) -> (bool);
+  joinRoom: (roomId: principal) -> (bool);
+  leaveRoom: (roomId: principal) -> (bool);
+  leaveSpectator: (gameId: principal) -> (bool);
+  moveToken: (gameId: principal, tokenIndex: nat, rollValue: nat) ->
+   (GameSession);
+  registerBot: (name: text, difficulty: BotDifficulty) -> (principal);
+  resetDemoCredits: () -> (float64);
+  rollDice: (gameId: principal) ->
+   (record {
+      entropy: text;
+      seedHash: text;
+      valid: bool;
+      value: nat;
+    });
+  saveCallerUserProfile: (name: text, color: text, avatarUrl: text, bio:
+   text) -> ();
+  sendSpectatorReaction: (gameId: principal, emoji: text) -> (bool);
+  updatePlayer: (name: text, color: text) -> ();
+  upgradeToPremium: () -> (bool);
+  withdraw: (amount: float64) -> (bool);
+}
