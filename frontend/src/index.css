@@ -1,0 +1,270 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Casino-style color palette using OKLCH */
+    --background: oklch(0.12 0.02 270);
+    --foreground: oklch(0.98 0.01 270);
+
+    --card: oklch(0.15 0.03 270);
+    --card-foreground: oklch(0.98 0.01 270);
+
+    --popover: oklch(0.15 0.03 270);
+    --popover-foreground: oklch(0.98 0.01 270);
+
+    --primary: oklch(0.55 0.25 270);
+    --primary-foreground: oklch(0.98 0.01 270);
+
+    --secondary: oklch(0.25 0.05 270);
+    --secondary-foreground: oklch(0.98 0.01 270);
+
+    --muted: oklch(0.25 0.03 270);
+    --muted-foreground: oklch(0.65 0.02 270);
+
+    --accent: oklch(0.65 0.25 330);
+    --accent-foreground: oklch(0.98 0.01 270);
+
+    --destructive: oklch(0.55 0.25 25);
+    --destructive-foreground: oklch(0.98 0.01 270);
+
+    --border: oklch(0.25 0.03 270);
+    --input: oklch(0.25 0.03 270);
+    --ring: oklch(0.55 0.25 270);
+
+    --radius: 0.5rem;
+
+    /* Casino-specific colors */
+    --gold: oklch(0.75 0.15 85);
+    --purple: oklch(0.55 0.25 290);
+    --pink: oklch(0.65 0.25 340);
+    --cyan: oklch(0.70 0.15 200);
+
+    /* Ludo player colors */
+    --red: oklch(0.55 0.25 25);
+    --green: oklch(0.55 0.20 145);
+    --yellow: oklch(0.75 0.18 95);
+    --blue: oklch(0.55 0.20 250);
+  }
+
+  .dark {
+    --background: oklch(0.12 0.02 270);
+    --foreground: oklch(0.98 0.01 270);
+
+    --card: oklch(0.15 0.03 270);
+    --card-foreground: oklch(0.98 0.01 270);
+
+    --popover: oklch(0.15 0.03 270);
+    --popover-foreground: oklch(0.98 0.01 270);
+
+    --primary: oklch(0.55 0.25 270);
+    --primary-foreground: oklch(0.98 0.01 270);
+
+    --secondary: oklch(0.25 0.05 270);
+    --secondary-foreground: oklch(0.98 0.01 270);
+
+    --muted: oklch(0.25 0.03 270);
+    --muted-foreground: oklch(0.65 0.02 270);
+
+    --accent: oklch(0.65 0.25 330);
+    --accent-foreground: oklch(0.98 0.01 270);
+
+    --destructive: oklch(0.55 0.25 25);
+    --destructive-foreground: oklch(0.98 0.01 270);
+
+    --border: oklch(0.25 0.03 270);
+    --input: oklch(0.25 0.03 270);
+    --ring: oklch(0.55 0.25 270);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  /* Glow shadow utilities for all player colors */
+  .shadow-glow-red {
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.5), 0 0 40px rgba(220, 38, 38, 0.3);
+  }
+
+  .shadow-glow-green {
+    box-shadow: 0 0 20px rgba(22, 163, 74, 0.5), 0 0 40px rgba(22, 163, 74, 0.3);
+  }
+
+  .shadow-glow-yellow {
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.5), 0 0 40px rgba(234, 179, 8, 0.3);
+  }
+
+  .shadow-glow-blue {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.5), 0 0 40px rgba(37, 99, 235, 0.3);
+  }
+
+  .shadow-glow-gold {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.6), 0 0 40px rgba(251, 191, 36, 0.4);
+  }
+
+  .shadow-glow-purple {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(168, 85, 247, 0.4);
+  }
+
+  .shadow-glow-pink {
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.6), 0 0 40px rgba(236, 72, 153, 0.4);
+  }
+
+  .shadow-glow-cyan {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.6), 0 0 40px rgba(34, 211, 238, 0.4);
+  }
+
+  /* Neon border effects */
+  .border-neon-purple {
+    border-color: rgba(168, 85, 247, 0.8);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+  }
+
+  .border-neon-pink {
+    border-color: rgba(236, 72, 153, 0.8);
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+  }
+
+  .border-neon-cyan {
+    border-color: rgba(34, 211, 238, 0.8);
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+  }
+
+  /* Metallic gradient */
+  .bg-metallic-gold {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #fbbf24 100%);
+  }
+
+  /* Holographic effect */
+  .bg-holographic {
+    background: linear-gradient(
+      135deg,
+      rgba(168, 85, 247, 0.3) 0%,
+      rgba(236, 72, 153, 0.3) 25%,
+      rgba(34, 211, 238, 0.3) 50%,
+      rgba(168, 85, 247, 0.3) 75%,
+      rgba(236, 72, 153, 0.3) 100%
+    );
+    background-size: 200% 200%;
+    animation: holographic 3s ease infinite;
+  }
+
+  @keyframes holographic {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* 3D transform utilities */
+  .transform-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
+
+/* Custom animations */
+@keyframes dice-roll {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(90deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1);
+  }
+  75% {
+    transform: rotate(270deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes token-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.8;
+    filter: brightness(1.2);
+  }
+}
+
+.animate-dice-roll {
+  animation: dice-roll 1s ease-in-out;
+}
+
+.animate-token-bounce {
+  animation: token-bounce 0.6s ease-in-out;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Mobile touch optimization */
+@media (max-width: 768px) {
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Larger touch targets for mobile */
+  button, a, input, select {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px;
+  }
+}

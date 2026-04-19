@@ -1,0 +1,929 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 25,
+  "summary": "LudoVerse - An advanced, premium multiplayer Ludo game with original assets, colorful casino-style UI, and multiple game modes. Phase 1 (complete) delivered core visual and UX upgrades including 3D board, physics-based dice, 3D tokens, and smooth animations. Phase 2 (complete) implemented modular game modes: Classic Mode (traditional rules, 2-4 players, ranked/unranked), Quick Mode (shortened paths, faster dice, time-limited turns for mobile), and Master Mode (skill-heavy with dice choice options). Phase 3 focuses on real-time multiplayer infrastructure with room-based matchmaking, private/public rooms, server-authoritative dice, reconnect support, and spectator-ready architecture using WebSockets, state sync with rollback safety, and deterministic dice seeds. Phase 4 will add real ICP blockchain integration with betting, wallets, escrow, prize pool, provably fair dice, and mandatory demo mode. Future phases will add Magic Mode and Web3 features.",
+  "architectural_notes": [
+    "Game has two modes: Demo (free practice) and Live (ICP betting)",
+    "AI agent system needed to simulate player behavior for co-founder",
+    "Demo mode serves as onboarding funnel to live betting games",
+    "Game pieces must move with smooth animations when dice is rolled",
+    "Ludo design should blend conventional Ludo aesthetics with futuristic advanced technology styling",
+    "Reference Yalla Ludo for gameplay variations and styles",
+    "Phase 1 focuses on core visual/UX upgrades without betting features",
+    "Using Unity WebGL/Mobile with URP lighting for 3D rendering",
+    "DOTween library for smooth animations and transitions",
+    "Casino-style aesthetic with gold, neon, and gradient colors"
+  ],
+  "known_issues": [
+    "Demo mode not functioning - players cannot practice Ludo for free",
+    "AI agent not automatically playing games in demo or live modes",
+    "Demo games and AI opponent not working when users open the app",
+    "Deployment error blocking new builds - must be resolved before implementing demo mode fixes",
+    "Ludo game interface lacks clarity - UI elements not clearly visible or distinguishable",
+    "Game pieces not moving when dice is rolled - movement logic or animations broken"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-add-a-demo-practice-game-mode-where-users-can-play-ludo-for-free-without-betting-real-icp-coins-demo-games-should-use-virtual-currency-and-allow-users-to-experience-the-full-gameplay-before-transitioning-to-live-betting-games",
+      "title": "Add a demo/practice game mode where users can play Ludo for free without betting real ICP coins. Demo games should use virtual currency and allow users to experience the full gameplay before transitioning to live betting games.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-ai-agent-named-ludoverse-ai-that-represents-the-co-founder-and-can-play-ludo-games-autonomously-the-ai-should-make-intelligent-moves-roll-dice-and-compete-like-a-real-player",
+      "title": "Create an AI agent named 'LudoVerse AI' that represents the co-founder and can play Ludo games autonomously. The AI should make intelligent moves, roll dice, and compete like a real player.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enable-the-ludoverse-ai-agent-to-participate-in-both-live-betting-games-with-real-icp-and-demo-practice-games-users-should-be-able-to-specifically-choose-to-play-against-the-ai-agent",
+      "title": "Enable the LudoVerse AI agent to participate in both live betting games with real ICP and demo/practice games. Users should be able to specifically choose to play against the AI agent.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-game-lobby-ui-to-clearly-differentiate-between-live-betting-games-and-demo-practice-games-add-a-mode-selector-or-separate-sections-for-each-game-type",
+      "title": "Update the game lobby UI to clearly differentiate between live betting games and demo practice games. Add a mode selector or separate sections for each game type.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-investigate-and-resolve-the-deployment-error-that-occurred-during-the-previous-build-check-for-motoko-compilation-errors-canister-upgrade-issues-or-network-connectivity-problems-ensure-the-canister-deploys-successfully-with-all-recent-changes",
+      "title": "Investigate and resolve the deployment error that occurred during the previous build. Check for Motoko compilation errors, canister upgrade issues, or network connectivity problems. Ensure the canister deploys successfully with all recent changes.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-the-demo-practice-game-mode-is-fully-functional-with-virtual-currency-ensure-users-can-play-free-ludo-games-without-betting-real-icp-coins-and-that-demo-games-use-a-separate-virtual-currency-system",
+      "title": "Verify that the demo/practice game mode is fully functional with virtual currency. Ensure users can play free Ludo games without betting real ICP coins, and that demo games use a separate virtual currency system.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-confirm-that-the-ludoverse-ai-agent-is-operational-and-can-play-autonomously-in-both-live-betting-games-and-demo-practice-games-ensure-the-ai-makes-intelligent-moves-rolls-dice-and-competes-like-a-real-player",
+      "title": "Confirm that the LudoVerse AI agent is operational and can play autonomously in both live betting games and demo practice games. Ensure the AI makes intelligent moves, rolls dice, and competes like a real player.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-validate-that-the-game-lobby-ui-clearly-distinguishes-between-live-betting-games-and-demo-practice-games-ensure-the-mode-selector-or-separate-sections-allow-users-to-easily-choose-their-preferred-game-type",
+      "title": "Validate that the game lobby UI clearly distinguishes between live betting games and demo practice games. Ensure the mode selector or separate sections allow users to easily choose their preferred game type.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-run-end-to-end-testing-to-ensure-all-game-flows-work-correctly-user-registration-demo-game-play-transition-to-live-games-ai-opponent-gameplay-wallet-operations-and-game-completion-fix-any-broken-functionality-discovered-during-testing",
+      "title": "Run end-to-end testing to ensure all game flows work correctly: user registration, demo game play, transition to live games, AI opponent gameplay, wallet operations, and game completion. Fix any broken functionality discovered during testing.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-demo-game-mode-functionality-so-players-can-start-and-complete-free-practice-ludo-games-using-virtual-currency-without-betting-real-icp-coins-ensure-demo-games-are-fully-playable-with-all-game-mechanics-dice-rolling-piece-movement-turn-management-functioning-correctly",
+      "title": "Fix the demo game mode functionality so players can start and complete free practice Ludo games using virtual currency without betting real ICP coins. Ensure demo games are fully playable with all game mechanics (dice rolling, piece movement, turn management) functioning correctly.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-activate-the-ludoverse-ai-agent-to-automatically-join-and-play-games-autonomously-in-both-demo-and-live-game-modes-the-ai-should-make-intelligent-moves-roll-dice-and-compete-without-manual-intervention",
+      "title": "Activate the LudoVerse AI agent to automatically join and play games autonomously in both demo and live game modes. The AI should make intelligent moves, roll dice, and compete without manual intervention.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-demo-games-and-the-ai-opponent-are-immediately-operational-when-users-first-open-the-app-without-requiring-additional-configuration-or-setup-steps",
+      "title": "Ensure demo games and the AI opponent are immediately operational when users first open the app, without requiring additional configuration or setup steps.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-demo-mode-virtual-currency-system-with-the-existing-wallet-infrastructure-demo-currency-should-be-clearly-distinguished-from-real-icp-balances-in-the-ui-and-should-not-interact-with-actual-blockchain-transactions",
+      "title": "Integrate demo mode virtual currency system with the existing wallet infrastructure. Demo currency should be clearly distinguished from real ICP balances in the UI and should not interact with actual blockchain transactions.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-gamelobby-component-to-ensure-demo-games-are-immediately-playable-when-the-demo-game-type-is-selected-remove-or-bypass-any-icp-balance-validation-checks-for-demo-games-and-display-clear-visual-indicators-that-demo-games-use-virtual-currency",
+      "title": "Update the GameLobby component to ensure demo games are immediately playable when the 'Demo' game type is selected. Remove or bypass any ICP balance validation checks for demo games and display clear visual indicators that demo games use virtual currency.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-gameboard-component-handles-demo-games-correctly-allowing-full-gameplay-dice-rolling-piece-movement-turn-progression-game-completion-without-triggering-any-icp-wallet-operations-or-balance-updates",
+      "title": "Ensure the GameBoard component handles demo games correctly, allowing full gameplay (dice rolling, piece movement, turn progression, game completion) without triggering any ICP wallet operations or balance updates.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-game-piece-movement-logic-in-gameboard-tsx-so-that-all-player-pieces-move-correctly-when-the-dice-is-rolled-implement-smooth-animation-for-piece-movement-along-the-board-path-including-proper-collision-detection-home-base-entry-exit-logic-and-capturing-opponent-pieces-according-to-standard-ludo-rules",
+      "title": "Fix the game piece movement logic in GameBoard.tsx so that all player pieces move correctly when the dice is rolled. Implement smooth animation for piece movement along the board path, including proper collision detection, home base entry/exit logic, and capturing opponent pieces according to standard Ludo rules.",
+      "reqIds": [
+        "REQ-20",
+        "REQ-25"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-redesign-the-ludo-board-canvas-rendering-in-gameboard-tsx-to-use-conventional-ludo-colors-red-green-yellow-blue-for-the-four-players-with-an-attractive-futuristic-advanced-technology-aesthetic-apply-neon-glow-effects-metallic-gradients-holographic-textures-or-circuit-board-patterns-while-maintaining-clear-visibility-and-conventional-ludo-board-layout-cross-shaped-board-with-four-home-bases-in-corners-central-safe-zone-and-colored-paths",
+      "title": "Redesign the Ludo board canvas rendering in GameBoard.tsx to use conventional Ludo colors (red, green, yellow, blue for the four players) with an attractive futuristic advanced technology aesthetic. Apply neon glow effects, metallic gradients, holographic textures, or circuit-board patterns while maintaining clear visibility and conventional Ludo board layout (cross-shaped board with four home bases in corners, central safe zone, and colored paths).",
+      "reqIds": [
+        "REQ-21",
+        "REQ-26"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-implement-a-realistic-3d-dice-rolling-animation-in-gameboard-tsx-using-css-transforms-or-canvas-animation-the-dice-should-tumble-and-rotate-in-3d-space-before-landing-on-the-rolled-number-mimicking-the-physics-of-a-real-dice-roll-add-corresponding-dice-roll-sound-effects-that-play-during-the-rolling-animation",
+      "title": "Implement a realistic 3D dice rolling animation in GameBoard.tsx using CSS transforms or canvas animation. The dice should tumble and rotate in 3D space before landing on the rolled number, mimicking the physics of a real dice roll. Add corresponding dice roll sound effects that play during the rolling animation.",
+      "reqIds": [
+        "REQ-22",
+        "REQ-27"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-improve-the-overall-visual-clarity-of-the-ludo-game-interface-in-gameboard-tsx-by-increasing-contrast-adding-clear-labels-improving-piece-visibility-and-ensuring-all-interactive-elements-are-easily-identifiable-make-sure-player-turn-indicators-available-moves-and-game-status-are-prominently-displayed",
+      "title": "Improve the overall visual clarity of the Ludo game interface in GameBoard.tsx by increasing contrast, adding clear labels, improving piece visibility, and ensuring all interactive elements are easily identifiable. Make sure player turn indicators, available moves, and game status are prominently displayed.",
+      "reqIds": [
+        "REQ-23",
+        "REQ-28"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-research-yalla-ludo-s-gameplay-variations-and-implement-multiple-ludo-game-modes-in-the-backend-main-mo-and-frontend-gamelobby-tsx-gameboard-tsx-add-support-for-different-rule-variants-such-as-quick-mode-fewer-pieces-or-shorter-paths-team-mode-2v2-gameplay-or-tournament-mode-multiple-rounds-with-scoring-allow-players-to-select-their-preferred-game-style-when-creating-a-new-game-in-the-lobby",
+      "title": "Research Yalla Ludo's gameplay variations and implement multiple Ludo game modes in the backend (main.mo) and frontend (GameLobby.tsx, GameBoard.tsx). Add support for different rule variants such as Quick Mode (fewer pieces or shorter paths), Team Mode (2v2 gameplay), or Tournament Mode (multiple rounds with scoring). Allow players to select their preferred game style when creating a new game in the lobby.",
+      "reqIds": [
+        "REQ-24",
+        "REQ-29"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-replace-the-current-2d-canvas-based-ludo-board-in-gameboard-tsx-with-a-polished-3d-board-featuring-depth-elevation-and-glow-effects-implement-casino-style-visual-design-using-gold-neon-and-gradient-colors-add-subtle-ambient-lighting-and-shadow-effects-to-create-a-premium-luxurious-appearance",
+      "title": "Replace the current 2D canvas-based Ludo board in GameBoard.tsx with a polished 3D board featuring depth, elevation, and glow effects. Implement casino-style visual design using gold, neon, and gradient colors. Add subtle ambient lighting and shadow effects to create a premium, luxurious appearance.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-physics-based-3d-dice-rolling-animation-in-gameboard-tsx-the-dice-should-tumble-and-rotate-in-3d-space-with-realistic-physics-simulation-before-landing-on-the-rolled-number-replace-the-current-2d-dice-rendering-with-a-fully-interactive-3d-dice-model",
+      "title": "Implement physics-based 3D dice rolling animation in GameBoard.tsx. The dice should tumble and rotate in 3D space with realistic physics simulation before landing on the rolled number. Replace the current 2D dice rendering with a fully interactive 3D dice model.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-transform-game-tokens-in-gameboard-tsx-from-2d-representations-to-3d-token-models-with-soft-shadows-and-bounce-animations-tokens-should-have-depth-reflective-surfaces-and-subtle-bounce-effects-when-landing-on-new-positions-apply-smooth-movement-animations-along-the-board-path",
+      "title": "Transform game tokens in GameBoard.tsx from 2D representations to 3D token models with soft shadows and bounce animations. Tokens should have depth, reflective surfaces, and subtle bounce effects when landing on new positions. Apply smooth movement animations along the board path.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-smooth-camera-panning-and-zooming-animations-in-gameboard-tsx-the-camera-should-dynamically-adjust-to-focus-on-active-game-areas-following-dice-rolls-and-token-movements-add-subtle-camera-transitions-that-enhance-the-viewing-experience-without-being-disorienting",
+      "title": "Implement smooth camera panning and zooming animations in GameBoard.tsx. The camera should dynamically adjust to focus on active game areas, following dice rolls and token movements. Add subtle camera transitions that enhance the viewing experience without being disorienting.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-gameboard-tsx-with-responsive-touch-and-mouse-controls-implement-intuitive-interactions-for-rolling-dice-tap-click-and-selecting-tokens-tap-click-to-select-tap-click-destination-to-move-ensure-controls-work-seamlessly-on-both-desktop-mouse-and-mobile-touch-devices",
+      "title": "Enhance GameBoard.tsx with responsive touch and mouse controls. Implement intuitive interactions for rolling dice (tap/click) and selecting tokens (tap/click to select, tap/click destination to move). Ensure controls work seamlessly on both desktop (mouse) and mobile (touch) devices.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-three-js-with-react-three-fiber-into-the-frontend-to-enable-3d-rendering-capabilities-for-the-ludo-board-dice-and-tokens-configure-the-3d-scene-with-appropriate-lighting-ambient-directional-point-lights-to-create-depth-and-atmosphere-set-up-the-rendering-pipeline-to-support-the-casino-style-aesthetic-with-glow-effects-and-reflections",
+      "title": "Integrate Three.js with React Three Fiber into the frontend to enable 3D rendering capabilities for the Ludo board, dice, and tokens. Configure the 3D scene with appropriate lighting (ambient, directional, point lights) to create depth and atmosphere. Set up the rendering pipeline to support the casino-style aesthetic with glow effects and reflections.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-gamelobby-tsx-to-display-a-mode-selector-with-three-options-classic-mode-quick-mode-and-master-mode-each-mode-card-should-show-its-key-characteristics-player-count-special-rules-time-limits-allow-users-to-select-their-preferred-mode-before-creating-a-new-game",
+      "title": "Update GameLobby.tsx to display a mode selector with three options: Classic Mode, Quick Mode, and Master Mode. Each mode card should show its key characteristics (player count, special rules, time limits). Allow users to select their preferred mode before creating a new game.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-gameboard-tsx-to-render-mode-specific-board-layouts-and-rules-classic-mode-uses-the-standard-3d-board-with-full-paths-quick-mode-renders-a-shortened-board-with-30-40-fewer-tiles-and-displays-a-visible-turn-timer-master-mode-shows-dice-choice-ui-with-2-3-selectable-dice-options-before-each-roll",
+      "title": "Update GameBoard.tsx to render mode-specific board layouts and rules. Classic Mode uses the standard 3D board with full paths. Quick Mode renders a shortened board with 30-40% fewer tiles and displays a visible turn timer. Master Mode shows dice choice UI with 2-3 selectable dice options before each roll.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-ranked-and-unranked-game-variants-for-classic-mode-and-quick-mode-in-both-backend-main-mo-and-frontend-gamelobby-tsx-allow-users-to-toggle-between-ranked-affects-player-statistics-and-leaderboards-and-unranked-practice-mode-with-no-stat-tracking-when-creating-games",
+      "title": "Add ranked and unranked game variants for Classic Mode and Quick Mode in both backend (main.mo) and frontend (GameLobby.tsx). Allow users to toggle between ranked (affects player statistics and leaderboards) and unranked (practice mode with no stat tracking) when creating games.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-optimize-quick-mode-ui-and-controls-in-gameboard-tsx-for-mobile-devices-ensure-touch-interactions-are-responsive-dice-rolls-are-instant-and-the-turn-timer-is-prominently-displayed-test-on-mobile-viewports-to-ensure-the-shortened-board-and-faster-gameplay-work-smoothly-on-smaller-screens",
+      "title": "Optimize Quick Mode UI and controls in GameBoard.tsx for mobile devices. Ensure touch interactions are responsive, dice rolls are instant, and the turn timer is prominently displayed. Test on mobile viewports to ensure the shortened board and faster gameplay work smoothly on smaller screens.",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-gamelobby-tsx-ui-for-browsing-and-joining-public-rooms-display-a-list-of-available-public-rooms-with-room-details-game-mode-player-count-bet-amount-ranked-unranked-status-add-a-create-private-room-button-that-generates-a-unique-room-code-and-displays-an-invitation-link-for-sharing-include-a-join-private-room-input-field-where-users-can-enter-room-codes-to-join",
+      "title": "Create GameLobby.tsx UI for browsing and joining public rooms. Display a list of available public rooms with room details (game mode, player count, bet amount, ranked/unranked status). Add a 'Create Private Room' button that generates a unique room code and displays an invitation link for sharing. Include a 'Join Private Room' input field where users can enter room codes to join.",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-gameboard-tsx-to-request-dice-rolls-from-the-backend-instead-of-generating-them-locally-send-dice-roll-requests-to-the-backend-and-receive-authoritative-dice-results-display-the-server-provided-dice-result-with-the-existing-3d-dice-rolling-animation-ensure-the-visual-animation-matches-the-server-determined-outcome",
+      "title": "Update GameBoard.tsx to request dice rolls from the backend instead of generating them locally. Send dice roll requests to the backend and receive authoritative dice results. Display the server-provided dice result with the existing 3D dice rolling animation. Ensure the visual animation matches the server-determined outcome.",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-reconnection-handling-in-gameboard-tsx-that-detects-network-disconnections-and-automatically-attempts-to-rejoin-the-game-session-display-a-reconnection-overlay-when-connection-is-lost-poll-the-backend-to-check-for-available-game-sessions-for-the-current-player-restore-the-game-board-to-the-exact-state-provided-by-the-backend-upon-successful-reconnection",
+      "title": "Add reconnection handling in GameBoard.tsx that detects network disconnections and automatically attempts to rejoin the game session. Display a reconnection overlay when connection is lost. Poll the backend to check for available game sessions for the current player. Restore the game board to the exact state provided by the backend upon successful reconnection.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-spectator-mode-ui-in-gameboard-tsx-that-renders-the-game-board-in-read-only-mode-disable-all-interactive-controls-dice-rolling-piece-selection-when-in-spectator-mode-display-a-spectator-indicator-badge-showing-the-user-is-observing-show-real-time-game-state-updates-as-the-match-progresses-add-a-leave-spectator-mode-button-to-exit-and-return-to-the-lobby",
+      "title": "Create a spectator mode UI in GameBoard.tsx that renders the game board in read-only mode. Disable all interactive controls (dice rolling, piece selection) when in spectator mode. Display a spectator indicator badge showing the user is observing. Show real-time game state updates as the match progresses. Add a 'Leave Spectator Mode' button to exit and return to the lobby.",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-websocket-client-integration-in-the-frontend-using-a-react-hook-e-g-usewebsocket-that-manages-websocket-connections-for-game-sessions-establish-websocket-connection-when-entering-gameboard-tsx-listen-for-real-time-game-state-updates-from-the-backend-update-the-game-board-ui-immediately-when-receiving-state-changes-handle-websocket-connection-errors-and-reconnection-attempts",
+      "title": "Implement WebSocket client integration in the frontend using a React hook (e.g., useWebSocket) that manages WebSocket connections for game sessions. Establish WebSocket connection when entering GameBoard.tsx. Listen for real-time game state updates from the backend. Update the game board UI immediately when receiving state changes. Handle WebSocket connection errors and reconnection attempts.",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-optimistic-ui-updates-with-rollback-handling-in-gameboard-tsx-allow-immediate-client-side-ui-updates-for-player-actions-piece-moves-to-reduce-perceived-latency-when-the-backend-rejects-or-corrects-an-action-roll-back-the-optimistic-ui-changes-and-apply-the-authoritative-backend-state-display-a-visual-indicator-e-g-brief-highlight-or-animation-when-rollback-corrections-occur",
+      "title": "Implement optimistic UI updates with rollback handling in GameBoard.tsx. Allow immediate client-side UI updates for player actions (piece moves) to reduce perceived latency. When the backend rejects or corrects an action, roll back the optimistic UI changes and apply the authoritative backend state. Display a visual indicator (e.g., brief highlight or animation) when rollback corrections occur.",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-usequeries-ts-to-add-react-query-hooks-for-the-new-room-system-functions-usecreateroom-usejoinroom-uselistpublicrooms-and-usestartgamefromroom-each-hook-should-use-the-backend-actor-to-call-the-corresponding-backend-function-and-handle-loading-error-states-appropriately",
+      "title": "Update useQueries.ts to add React Query hooks for the new room system functions: useCreateRoom, useJoinRoom, useListPublicRooms, and useStartGameFromRoom. Each hook should use the backend actor to call the corresponding backend function and handle loading/error states appropriately.",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-gamelobby-tsx-to-integrate-the-new-room-system-add-ui-for-creating-rooms-public-private-selector-room-code-display-for-private-rooms-display-list-of-public-rooms-using-uselistpublicrooms-hook-with-room-cards-showing-game-mode-bet-amount-player-count-and-join-button-add-private-room-join-input-where-users-can-enter-room-codes-wire-up-room-creation-and-joining-to-the-new-backend-functions",
+      "title": "Update GameLobby.tsx to integrate the new room system. Add UI for creating rooms (public/private selector, room code display for private rooms). Display list of public rooms using useListPublicRooms hook with room cards showing game mode, bet amount, player count, and join button. Add private room join input where users can enter room codes. Wire up room creation and joining to the new backend functions.",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-gameboard-tsx-to-use-server-authoritative-dice-rolls-replace-local-dice-roll-generation-with-calls-to-the-backend-rolldice-function-when-the-player-clicks-to-roll-send-a-request-to-the-backend-and-wait-for-the-authoritative-result-display-the-3d-dice-rolling-animation-while-waiting-then-show-the-server-provided-result-when-received-add-error-handling-for-failed-dice-roll-requests",
+      "title": "Update GameBoard.tsx to use server-authoritative dice rolls. Replace local dice roll generation with calls to the backend rollDice function. When the player clicks to roll, send a request to the backend and wait for the authoritative result. Display the 3D dice rolling animation while waiting, then show the server-provided result when received. Add error handling for failed dice roll requests.",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-to-skip-the-manual-login-prompt-when-a-valid-internet-identity-delegation-is-detected-automatically-initialize-user-profile-and-navigate-to-the-dashboard-when-authentication-is-restored-on-app-load",
+      "title": "Update App.tsx to skip the manual login prompt when a valid Internet Identity delegation is detected. Automatically initialize user profile and navigate to the dashboard when authentication is restored on app load.",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-game-piece-movement-logic-in-gameboard-tsx-to-ensure-all-player-pieces-move-correctly-along-the-board-path-when-a-dice-is-rolled-implement-smooth-animation-for-piece-transitions-proper-collision-detection-home-base-entry-exit-rules-and-opponent-piece-capture-mechanics-according-to-standard-ludo-rules",
+      "title": "Fix game piece movement logic in GameBoard.tsx to ensure all player pieces move correctly along the board path when a dice is rolled. Implement smooth animation for piece transitions, proper collision detection, home base entry/exit rules, and opponent piece capture mechanics according to standard Ludo rules.",
+      "reqIds": [
+        "REQ-72"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-reconnection-handling-in-gameboard-tsx-is-fully-operational-when-network-disconnection-is-detected-display-a-reconnection-overlay-and-automatically-poll-the-backend-to-rejoin-the-active-game-session-restore-the-exact-game-state-from-the-backend-upon-successful-reconnection",
+      "title": "Ensure reconnection handling in GameBoard.tsx is fully operational. When network disconnection is detected, display a reconnection overlay and automatically poll the backend to rejoin the active game session. Restore the exact game state from the backend upon successful reconnection.",
+      "reqIds": [
+        "REQ-73"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-optimistic-ui-updates-with-rollback-handling-in-gameboard-tsx-are-working-correctly-ensure-immediate-client-side-ui-updates-for-piece-moves-are-applied-and-when-the-backend-rejects-an-action-the-ui-rolls-back-to-the-authoritative-backend-state-with-a-visual-indicator",
+      "title": "Verify optimistic UI updates with rollback handling in GameBoard.tsx are working correctly. Ensure immediate client-side UI updates for piece moves are applied, and when the backend rejects an action, the UI rolls back to the authoritative backend state with a visual indicator.",
+      "reqIds": [
+        "REQ-74"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-spectator-mode-in-gameboard-tsx-is-fully-functional-verify-that-spectators-can-view-live-games-in-read-only-mode-with-all-interactive-controls-disabled-real-time-state-updates-display-correctly-and-the-leave-spectator-mode-button-returns-users-to-the-lobby",
+      "title": "Ensure spectator mode in GameBoard.tsx is fully functional. Verify that spectators can view live games in read-only mode with all interactive controls disabled, real-time state updates display correctly, and the leave spectator mode button returns users to the lobby.",
+      "reqIds": [
+        "REQ-75"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-all-game-modes-classic-quick-master-are-fully-operational-in-both-gamelobby-tsx-and-gameboard-tsx-ensure-mode-specific-rules-board-layouts-and-ui-elements-render-correctly-for-each-mode-variant",
+      "title": "Verify that all game modes (Classic, Quick, Master) are fully operational in both GameLobby.tsx and GameBoard.tsx. Ensure mode-specific rules, board layouts, and UI elements render correctly for each mode variant.",
+      "reqIds": [
+        "REQ-76"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-run-comprehensive-end-to-end-testing-across-all-game-flows-automatic-login-profile-setup-demo-game-creation-and-play-live-game-with-betting-ai-opponent-gameplay-wallet-operations-room-creation-joining-reconnection-after-disconnect-spectator-mode-and-game-completion-with-prize-distribution-fix-any-broken-functionality-discovered-during-testing",
+      "title": "Run comprehensive end-to-end testing across all game flows: automatic login, profile setup, demo game creation and play, live game with betting, AI opponent gameplay, wallet operations, room creation/joining, reconnection after disconnect, spectator mode, and game completion with prize distribution. Fix any broken functionality discovered during testing.",
+      "reqIds": [
+        "REQ-80"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-to-remove-any-manual-login-prompts-or-authentication-gates-when-a-valid-internet-identity-delegation-is-detected-during-initialization-automatically-proceed-to-user-profile-initialization-and-dashboard-navigation-when-authentication-is-restored",
+      "title": "Update App.tsx to remove any manual login prompts or authentication gates when a valid Internet Identity delegation is detected during initialization. Automatically proceed to user profile initialization and dashboard navigation when authentication is restored.",
+      "reqIds": [
+        "REQ-82"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-error-handling-in-useinternetidentity-ts-for-authentication-failures-during-automatic-login-attempts-display-user-friendly-error-messages-and-provide-a-manual-login-fallback-if-automatic-authentication-fails",
+      "title": "Add error handling in useInternetIdentity.ts for authentication failures during automatic login attempts. Display user-friendly error messages and provide a manual login fallback if automatic authentication fails.",
+      "reqIds": [
+        "REQ-85"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-header-tsx-to-reflect-automatic-login-state-remove-or-hide-the-login-button-when-user-is-automatically-authenticated-and-ensure-logout-functionality-remains-accessible",
+      "title": "Update Header.tsx to reflect automatic login state. Remove or hide the login button when user is automatically authenticated, and ensure logout functionality remains accessible.",
+      "reqIds": [
+        "REQ-86"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Add free demo/practice mode for LudoVerse",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Create AI agent that can play Ludo on behalf of co-founder",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Enable AI agent to play in both live and demo game modes",
+      "reqIds": [
+        "AR-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add backend game mode enumeration to distinguish between live and demo games. Store game mode in game sessions and enforce appropriate betting rules based on mode.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Fix any backend logic preventing demo games from being created, joined, or completed. Ensure the GameMode enumeration correctly distinguishes demo games from live games and applies appropriate validation rules.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Investigate and resolve the deployment error preventing the canister from deploying successfully. Check for Motoko compilation errors, type mismatches, missing actor methods, canister upgrade issues, or network connectivity problems. Ensure the backend compiles without errors and deploys cleanly.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Fix the demo game mode functionality so players can start and complete free practice Ludo games using virtual currency without betting real ICP coins. Ensure the GameMode.Demo enumeration correctly identifies demo games and bypasses all ICP wallet balance checks and betting logic.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Fix Ludo game pieces not moving when dice is rolled - ensure piece movement animations and logic work correctly",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Improve Ludo game interface clarity and visibility - make UI elements more distinguishable and easier to understand",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Redesign Ludo board with conventional Ludo colors (red, green, yellow, blue) in an attractive futuristic advanced technology style",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Implement conventional dice rolling animation and sound effects similar to traditional Ludo games",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Study and implement Yalla Ludo's different Ludo styles and gameplay variations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Phase 1: Core Premium Game - Build polished 3D Ludo board with depth, glow, casino-style colors (gold, neon, gradients), and smooth camera pans/zooms",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Phase 1: Implement 3D dice with realistic physics-based rolling animation, replacing current 2D dice",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Phase 1: Create 3D game tokens with soft shadows, bounce animations, and smooth movement along board paths",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Phase 1: Implement responsive touch and mouse controls for dice rolling and token selection",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Phase 1: Integrate Unity WebGL or Unity Mobile with URP lighting and DOTween for premium animations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Phase 2: Implement Classic Mode - traditional Ludo rules, 2-4 players, no power-ups, ranked and unranked options",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Phase 2: Implement Quick Mode - shortened paths, faster dice, time-limited turns, 2-4 players, no power-ups, ranked and unranked, optimized for mobile",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Phase 2: Implement Master Mode - skill-heavy rules with dice choice options, advanced gameplay mechanics",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Extend the backend GameMode enumeration in main.mo to include Classic, Quick, and Master mode variants. Each mode should be a distinct enum value that can be stored in GameSession records.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Implement Classic Mode backend rules in main.mo: traditional Ludo rules with support for 2-4 players, no power-ups, and separate ranked/unranked tracking. Store match results with mode-specific statistics.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Implement Quick Mode backend rules in main.mo: shortened board paths (reduce path length by 30-40%), faster dice mechanics (allow extra rolls on 6s with shorter cooldown), and time-limited turns (30-45 second turn timer). Support 2-4 players with no power-ups and ranked/unranked variants.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Implement Master Mode backend rules in main.mo: skill-heavy gameplay with dice choice options. Allow players to choose between multiple dice values or dice roll modifiers on their turn. Include advanced move validation and strategic gameplay mechanics.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Phase 3: Implement room-based matchmaking system with private and public room support",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Phase 3: Implement server-authoritative dice rolling with deterministic dice seeds to prevent cheating",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Phase 3: Add reconnect support to allow players to rejoin games after disconnection without losing progress",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Phase 3: Build spectator-ready architecture to allow non-playing users to watch live games",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Phase 3: Integrate WebSocket infrastructure for real-time multiplayer communication and state sync",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Phase 3: Implement state synchronization with rollback safety to handle network latency and conflicts",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Implement room-based matchmaking system in the backend (main.mo) that supports both private and public game rooms. Private rooms should be joinable only via unique room code or invitation link. Public rooms should be discoverable in a matchmaking queue. Add room metadata including room type (private/public), room ID, creator principal, current player count, max player capacity, and game mode.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Implement server-authoritative dice rolling system in the backend (main.mo) using deterministic dice seeds. Generate cryptographically secure random seeds on the backend for each dice roll. Store dice roll history with seeds in game session state. Validate all dice rolls server-side to prevent client-side manipulation or cheating.",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Implement reconnect support in the backend (main.mo) that preserves game session state when players disconnect. Store active game sessions with player connection status. Allow players to rejoin ongoing games using their principal ID. Restore the player's exact game state (piece positions, turn order, dice history) when reconnecting. Handle timeout logic for abandoned games if players do not reconnect within a reasonable timeframe.",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Build spectator-ready architecture in the backend (main.mo) that allows non-playing users to observe live games. Add spectator list to game session state. Implement read-only access for spectators that streams game state updates without allowing gameplay actions. Track spectator principals and allow spectators to join/leave games dynamically.",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-47",
+      "summary": "Integrate WebSocket infrastructure into the backend to enable real-time multiplayer communication. Establish persistent WebSocket connections for active game sessions. Broadcast game state updates to all connected players and spectators when game events occur (dice rolls, piece moves, turn changes). Implement connection lifecycle management (connect, disconnect, reconnect) for WebSocket clients.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-49",
+      "summary": "Implement state synchronization with rollback safety in the backend (main.mo). Store game state snapshots at regular intervals (e.g., every turn or every significant game event). When state conflicts occur due to network latency, resolve conflicts by rolling back to the last known valid state snapshot and replaying subsequent actions. Ensure the authoritative game state on the backend always takes precedence over client predictions.",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-50",
+      "summary": "Phase 4: Implement ICP wallet connect flow before betting - users must connect wallet to play betting mode",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-51",
+      "summary": "Phase 4: Implement entry fee lock in smart contract - bet amount locked in canister escrow before match starts",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-52",
+      "summary": "Phase 4: Implement automatic prize pool calculation with transparent platform fee deduction",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "Phase 4: Implement winner payout execution on-chain - transfer prize pool to winner's wallet",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-54",
+      "summary": "Phase 4: Implement mandatory demo mode with full game experience without wallet (demo credits, same animations/UI, no blockchain interaction)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "Phase 4: Implement ICP canisters for match escrow, bet settlement, payout logic, and fair randomness verification",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-56",
+      "summary": "Phase 4: Implement provably fair dice system with visible fairness indicator showing random seed verification",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-57",
+      "summary": "Phase 4: Add clear bet amount and win display, animated bet lock-in and payout celebrations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-58",
+      "summary": "Phase 4: Show on-chain transaction link after each match for verification",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-59",
+      "summary": "Phase 4: Add in-game explanation of fairness and rules (visible trust, no hidden mechanics)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-60",
+      "summary": "Phase 4: Implement anti-collusion logic and replay validation in backend",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-61",
+      "summary": "Phase 4: Implement turn timeout enforcement in backend",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-62",
+      "summary": "Phase 4: Isolate wallet actions from gameplay logic to ensure security and no custodial wallet handling",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-63",
+      "summary": "Phase 7: Optimize game performance and implement clean sound design (dice, movement, wins)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-64",
+      "summary": "Phase 7: Add clear win/lose states and scalable architecture for public Web3 launch",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-65",
+      "summary": "Implement room-based matchmaking data structures in backend/main.mo. Add a stable map to store MatchmakingRoom records indexed by room ID. Each room record should include: roomId (unique Text identifier), roomType (public/private enum), creatorPrincipal (Principal of room creator), gameMode (Classic/Quick/Master), betAmount (Nat), isRanked (Bool), playerPrincipals (Array of Principal), maxPlayers (Nat, typically 2-4), roomStatus (waiting/full/started), and createdAt (timestamp).",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-66",
+      "summary": "Implement createRoom function in backend/main.mo that creates a new matchmaking room. Accept parameters: roomType (public/private), gameMode, betAmount, isRanked, and maxPlayers. Generate a unique room ID (for private rooms, use a short alphanumeric code; for public rooms, use a UUID). Initialize the room with the caller's principal as creator and first player. Store the room in the matchmaking rooms map. Return the room ID and full room details.",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-67",
+      "summary": "Implement joinRoom function in backend/main.mo that allows players to join existing matchmaking rooms by room ID. Validate that the room exists, is not full, and has not started. Add the caller's principal to the room's playerPrincipals array. If the room reaches maxPlayers capacity, update roomStatus to 'full'. Return the updated room details including all current players.",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-68",
+      "summary": "Implement listPublicRooms function in backend/main.mo that returns an array of all public matchmaking rooms with roomStatus 'waiting' or 'full' but not yet started. Include room details: roomId, gameMode, betAmount, isRanked, current player count, maxPlayers, and createdAt timestamp. Sort rooms by creation time (newest first).",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-69",
+      "summary": "Implement startGameFromRoom function in backend/main.mo that transitions a matchmaking room into an active game session. Validate that the room is full or has at least 2 players. Create a new GameSession with players from the room, initialize game state (board positions, turn order, dice history), and update roomStatus to 'started'. Return the game session ID and initial game state.",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-70",
+      "summary": "Implement server-authoritative dice rolling in backend/main.mo. Add a rollDice function that accepts gameId and playerPrincipal as parameters. Validate that it's the player's turn. Generate a cryptographically secure random number between 1-6 using a deterministic seed derived from game state, block timestamp, and player principal. Store the dice result with its seed in the game session's dice history. Return the dice result and seed for client verification.",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-71",
+      "summary": "Add getDiceHistory query function in backend/main.mo that returns the complete dice roll history for a given game session. Include for each roll: rollNumber, playerPrincipal, diceResult, seed, and timestamp. This enables clients to verify fairness by recalculating dice results from seeds.",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-72",
+      "summary": "Update GameSession type in backend/main.mo to include diceHistory field (array of dice roll records), roomId reference (optional Text to link back to matchmaking room), and lastActivityTimestamp (for timeout detection). Ensure the updated type is compatible with existing game session creation and query functions.",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-73",
+      "summary": "Implement automatic login with Internet Identity without manual login steps",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-74",
+      "summary": "Resolve all Internet Identity and authentication login issues",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-75",
+      "summary": "Complete and make fully operational all remaining features from Phases 1-7",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-76",
+      "summary": "Implement automatic Internet Identity login in useInternetIdentity.ts hook. On app initialization, automatically check for stored delegations and attempt silent authentication without requiring user to click a login button. If a valid delegation exists, restore the authenticated session immediately.",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-78",
+      "summary": "Fix delegation validation and refresh logic in useInternetIdentity.ts to prevent authentication session expiry issues. Implement automatic delegation renewal before expiry to maintain seamless authenticated sessions.",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-79",
+      "summary": "Verify and fix demo mode game creation in backend main.mo. Ensure that when gameMode is Demo, the createGame function bypasses all ICP balance validation checks and creates fully functional game sessions using virtual currency.",
+      "reqIds": [
+        "REQ-70"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-80",
+      "summary": "Activate the LudoVerse AI bot in backend main.mo to automatically join available game sessions in both demo and live modes. Implement autonomous bot move generation that makes intelligent decisions for dice rolls and piece movements without human intervention.",
+      "reqIds": [
+        "REQ-71"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-86",
+      "summary": "Ensure private and public room creation, joining, and listing features are fully operational in GameLobby.tsx. Verify that room codes are generated for private rooms, public rooms are discoverable in the lobby, and the startGameFromRoom flow transitions correctly to active game sessions.",
+      "reqIds": [
+        "REQ-77"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-87",
+      "summary": "Verify wallet operations in WalletManager.tsx are fully functional. Ensure ICP deposit, withdrawal, and premium upgrade features work correctly with proper validation, error handling, and balance updates.",
+      "reqIds": [
+        "REQ-78"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-88",
+      "summary": "Ensure ProfilePage.tsx profile editing functionality is fully operational. Verify that name changes, color selection, and statistics display work correctly with proper validation and backend synchronization.",
+      "reqIds": [
+        "REQ-79"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-89",
+      "summary": "Update useInternetIdentity.ts to automatically check for stored Internet Identity delegations on hook initialization. If a valid delegation exists, restore the authenticated session immediately without requiring user interaction.",
+      "reqIds": [
+        "REQ-81"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-91",
+      "summary": "Fix delegation validation logic in useInternetIdentity.ts to properly verify delegation expiry and chain validation. Ensure expired or invalid delegations are detected and cleared, triggering re-authentication only when necessary.",
+      "reqIds": [
+        "REQ-83"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-92",
+      "summary": "Implement automatic delegation refresh in useInternetIdentity.ts that renews delegations before they expire. Set up a timer to refresh delegations proactively, maintaining seamless authenticated sessions without interruption.",
+      "reqIds": [
+        "REQ-84"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "3d",
+  "projectName": "LudoVerse",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

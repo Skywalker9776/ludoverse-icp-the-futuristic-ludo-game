@@ -1,0 +1,139 @@
+{
+  "kind": "build_request",
+  "title": "Fix automatic Internet Identity login flow",
+  "projectName": "LudoVerse",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-81",
+      "text": "Update useInternetIdentity.ts to automatically check for stored Internet Identity delegations on hook initialization. If a valid delegation exists, restore the authenticated session immediately without requiring user interaction.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Everyone automatically login with internet identity"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Hook automatically checks for stored delegations when initialized",
+        "Valid delegations are restored without user clicking login button",
+        "Authenticated session is established silently on app load",
+        "No manual login prompt appears when valid delegation exists"
+      ]
+    },
+    {
+      "id": "REQ-82",
+      "text": "Update App.tsx to remove any manual login prompts or authentication gates when a valid Internet Identity delegation is detected during initialization. Automatically proceed to user profile initialization and dashboard navigation when authentication is restored.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Everyone automatically login with internet identity",
+          "Resolve login issues"
+        ]
+      },
+      "acceptanceCriteria": [
+        "No login prompt displayed when valid delegation exists",
+        "App automatically initializes user profile on authenticated load",
+        "Dashboard view loads automatically for authenticated users",
+        "Login flow only triggers for users without valid delegations"
+      ]
+    },
+    {
+      "id": "REQ-83",
+      "text": "Fix delegation validation logic in useInternetIdentity.ts to properly verify delegation expiry and chain validation. Ensure expired or invalid delegations are detected and cleared, triggering re-authentication only when necessary.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Resolve login issues"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Delegation expiry is correctly validated on app load",
+        "Invalid or expired delegations are cleared from storage",
+        "Valid delegations pass verification and maintain session",
+        "Re-authentication only required for invalid delegations"
+      ]
+    },
+    {
+      "id": "REQ-84",
+      "text": "Implement automatic delegation refresh in useInternetIdentity.ts that renews delegations before they expire. Set up a timer to refresh delegations proactively, maintaining seamless authenticated sessions without interruption.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Resolve login issues"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Delegation refresh timer is set up on authentication",
+        "Delegations are renewed before expiry time",
+        "Authenticated sessions remain active without user intervention",
+        "Refresh failures trigger graceful re-authentication flow"
+      ]
+    },
+    {
+      "id": "REQ-85",
+      "text": "Add error handling in useInternetIdentity.ts for authentication failures during automatic login attempts. Display user-friendly error messages and provide a manual login fallback if automatic authentication fails.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Resolve login issues"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Authentication errors are caught and logged",
+        "User-friendly error messages displayed for auth failures",
+        "Manual login button available as fallback",
+        "Failed automatic login attempts do not crash the app"
+      ]
+    },
+    {
+      "id": "REQ-86",
+      "text": "Update Header.tsx to reflect automatic login state. Remove or hide the login button when user is automatically authenticated, and ensure logout functionality remains accessible.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Everyone automatically login with internet identity"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Login button hidden when user is authenticated",
+        "User profile or wallet balance displayed for authenticated users",
+        "Logout button remains visible and functional",
+        "Authentication state updates reflected in header UI"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify backend/main.mo or backend/migration.mo",
+    "Preserve existing Internet Identity integration patterns",
+    "Maintain compatibility with existing authentication flows",
+    "Do not change frontend/src/main.tsx or frontend/src/components/ui/* files"
+  ],
+  "nonGoals": [
+    "Implementing alternative authentication providers",
+    "Adding multi-factor authentication",
+    "Changing the Internet Identity provider configuration",
+    "Modifying wallet connection logic"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

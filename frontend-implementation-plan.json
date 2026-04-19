@@ -1,0 +1,114 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix automatic Internet Identity login flow",
+  "requirements": [
+    {
+      "id": "REQ-81",
+      "summary": "Implement automatic delegation restoration on hook initialization",
+      "acceptanceCriteria": [
+        "Hook automatically checks for stored delegations when initialized",
+        "Valid delegations are restored without user clicking login button",
+        "Authenticated session is established silently on app load",
+        "No manual login prompt appears when valid delegation exists"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Add automatic delegation check in the InternetIdentityProvider component's useEffect. On mount, check for stored delegations using AuthClient.create() and isAuthenticated(). If a valid delegation exists, retrieve the identity and update the identity state immediately without requiring user interaction. Ensure this runs before any UI renders that depend on authentication state."
+        }
+      ]
+    },
+    {
+      "id": "REQ-82",
+      "summary": "Remove manual login gates and enable automatic navigation for authenticated users",
+      "acceptanceCriteria": [
+        "No login prompt displayed when valid delegation exists",
+        "App automatically initializes user profile on authenticated load",
+        "Dashboard view loads automatically for authenticated users",
+        "Login flow only triggers for users without valid delegations"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Update the authentication flow logic to skip manual login prompts when identity is already available from automatic delegation restoration. Once isAuthenticated is true from the restored delegation, proceed directly to user initialization and profile checks. Remove any conditional rendering that blocks dashboard access when a valid identity exists. Ensure the app waits for the automatic delegation check to complete before showing login UI."
+        }
+      ]
+    },
+    {
+      "id": "REQ-83",
+      "summary": "Implement proper delegation validation with expiry and chain checks",
+      "acceptanceCriteria": [
+        "Delegation expiry is correctly validated on app load",
+        "Invalid or expired delegations are cleared from storage",
+        "Valid delegations pass verification and maintain session",
+        "Re-authentication only required for invalid delegations"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Add delegation validation logic in the automatic restoration flow. After retrieving a delegation from storage, check its expiry timestamp against the current time. Validate the delegation chain structure and signature. If the delegation is expired or invalid, call AuthClient.logout() to clear it from storage and set identity to null. Only restore the session if validation passes. Log validation failures for debugging."
+        }
+      ]
+    },
+    {
+      "id": "REQ-84",
+      "summary": "Add proactive delegation refresh timer to maintain seamless sessions",
+      "acceptanceCriteria": [
+        "Delegation refresh timer is set up on authentication",
+        "Delegations are renewed before expiry time",
+        "Authenticated sessions remain active without user intervention",
+        "Refresh failures trigger graceful re-authentication flow"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Implement a delegation refresh timer that activates after successful authentication. Calculate the delegation expiry time and set up a timer to refresh the delegation before it expires (e.g., when 80% of the delegation lifetime has passed). Use setInterval or setTimeout to trigger AuthClient renewal. On refresh success, update the stored delegation. On refresh failure, clear the session and trigger the manual login flow. Clean up the timer on component unmount or logout."
+        }
+      ]
+    },
+    {
+      "id": "REQ-85",
+      "summary": "Add comprehensive error handling for automatic authentication failures",
+      "acceptanceCriteria": [
+        "Authentication errors are caught and logged",
+        "User-friendly error messages displayed for auth failures",
+        "Manual login button available as fallback",
+        "Failed automatic login attempts do not crash the app"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Wrap all automatic authentication operations in try-catch blocks. Catch errors during delegation restoration, validation, and refresh. Log errors to the console with descriptive messages. Add an error state to the context that components can access. When automatic login fails, set identity to null and provide a clear path to manual login. Ensure the app remains functional and displays appropriate fallback UI when automatic authentication encounters issues."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add error handling UI for authentication failures. If the useInternetIdentity hook provides an error state, display a user-friendly error message (e.g., toast notification or inline message). Ensure the manual login button remains visible and accessible as a fallback when automatic authentication fails. Do not block the user from attempting manual login after automatic login errors."
+        }
+      ]
+    },
+    {
+      "id": "REQ-86",
+      "summary": "Update Header to reflect automatic authentication state",
+      "acceptanceCriteria": [
+        "Login button hidden when user is authenticated",
+        "User profile or wallet balance displayed for authenticated users",
+        "Logout button remains visible and functional",
+        "Authentication state updates reflected in header UI"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Header.tsx",
+          "operation": "modify",
+          "description": "Update the Header component to conditionally render the login button based on the isAuthenticated state from useInternetIdentity. When isAuthenticated is true (including after automatic delegation restoration), hide or replace the login button with user information (wallet balance or profile indicator). Ensure the logout button remains visible and functional for authenticated users. The header should reactively update when authentication state changes from automatic or manual login."
+        }
+      ]
+    }
+  ]
+}

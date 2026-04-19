@@ -1,0 +1,65 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-update-app-tsx-to-remove-any-manual-login-prompts-or-authentication-gates-when-a-valid-internet-identity-delegation-is-detected-during-initialization-automatically-proceed-to-user-profile-initialization-and-dashboard-navigation-when-authentication-is-restored",
+      "featureTitle": "Update App.tsx to remove any manual login prompts or authentication gates when a valid Internet Identity delegation is detected during initialization. Automatically proceed to user profile initialization and dashboard navigation when authentication is restored.",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "authorization@3.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-82"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-error-handling-in-useinternetidentity-ts-for-authentication-failures-during-automatic-login-attempts-display-user-friendly-error-messages-and-provide-a-manual-login-fallback-if-automatic-authentication-fails",
+      "featureTitle": "Add error handling in useInternetIdentity.ts for authentication failures during automatic login attempts. Display user-friendly error messages and provide a manual login fallback if automatic authentication fails.",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "authorization@3.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-85"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-header-tsx-to-reflect-automatic-login-state-remove-or-hide-the-login-button-when-user-is-automatically-authenticated-and-ensure-logout-functionality-remains-accessible",
+      "featureTitle": "Update Header.tsx to reflect automatic login state. Remove or hide the login button when user is automatically authenticated, and ensure logout functionality remains accessible.",
+      "files": [
+        "frontend/src/components/Header.tsx"
+      ],
+      "components": [
+        "authorization@3.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-86"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
